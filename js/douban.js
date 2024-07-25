@@ -6,14 +6,15 @@
 * @Software : Samples
 * @Desc     :
 */
-import {VodShort} from "../lib/vod.js";
-import {Spider} from "./spider.js";
-import {_, Crypto} from "../lib/cat.js";
+import { VodShort } from "../lib/vod.js";
+import { Spider } from "./spider.js";
+import { _, Crypto } from "../lib/cat.js";
 
 
 class DoubanSpider extends Spider {
     constructor() {
         super();
+        this.jadeLog.info("DoubanSpider init", true)
         this.siteUrl = 'https://frodo.douban.com/api/v2'
         this.apiKey = "0ac44ae016490db2204ce0a042db2916"
         this.UserAgents = ["api-client/1 com.douban.frodo/7.22.0.beta9(231) Android/23 product/Mate 40 vendor/HUAWEI model/Mate 40 brand/HUAWEI  rom/android  network/wifi  platform/AndroidPad", "api-client/1 com.douban.frodo/7.18.0(230) Android/22 product/MI 9 vendor/Xiaomi model/MI 9 brand/Android  rom/miui6  network/wifi  platform/mobile nd/1", "api-client/1 com.douban.frodo/7.1.0(205) Android/29 product/perseus vendor/Xiaomi model/Mi MIX 3  rom/miui6  network/wifi  platform/mobile nd/1", "api-client/1 com.douban.frodo/7.3.0(207) Android/22 product/MI 9 vendor/Xiaomi model/MI 9 brand/Android  rom/miui6  network/wifi platform/mobile nd/1"]
@@ -69,7 +70,7 @@ class DoubanSpider extends Spider {
             "type_name": "电视剧榜单", "type_id": "rank_list_tv"
         }]
         for (const class_dic of classes) {
-            this.classes.push({"type_name": class_dic["type_name"], "type_id": class_dic["type_id"]})
+            this.classes.push({ "type_name": class_dic["type_name"], "type_id": class_dic["type_id"] })
         }
     }
 
@@ -495,7 +496,7 @@ class DoubanSpider extends Spider {
 
     async setHomeVod() {
         let url = this.siteUrl + "/subject_collection/subject_real_time_hotest/items"
-        let content = await this.fetch(url, {"apikey": this.apiKey}, this.getHeader())
+        let content = await this.fetch(url, { "apikey": this.apiKey }, this.getHeader())
         if (!_.isEmpty(content)) {
             let content_json = JSON.parse(content)
             let items = content_json["subject_collection_items"]
@@ -515,7 +516,7 @@ class DoubanSpider extends Spider {
             start = (parseInt(pg) - 1) * this.limit
         }
         let cateUrl = ""
-        let params = {"start": start.toString(), "count": this.limit.toString()}
+        let params = { "start": start.toString(), "count": this.limit.toString() }
         let itemKey = "items"
         switch (tid) {
             case "hot_gaia":
@@ -633,4 +634,4 @@ export function __jsEvalReturn() {
     };
 }
 
-export {spider}
+export { spider }
