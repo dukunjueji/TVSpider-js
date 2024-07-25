@@ -18,8 +18,25 @@ class DoubanSpider extends Spider {
         this.siteUrl = 'https://frodo.douban.com/api/v2'
         this.apiKey = "0ac44ae016490db2204ce0a042db2916"
         this.UserAgents = ["api-client/1 com.douban.frodo/7.22.0.beta9(231) Android/23 product/Mate 40 vendor/HUAWEI model/Mate 40 brand/HUAWEI  rom/android  network/wifi  platform/AndroidPad", "api-client/1 com.douban.frodo/7.18.0(230) Android/22 product/MI 9 vendor/Xiaomi model/MI 9 brand/Android  rom/miui6  network/wifi  platform/mobile nd/1", "api-client/1 com.douban.frodo/7.1.0(205) Android/29 product/perseus vendor/Xiaomi model/Mi MIX 3  rom/miui6  network/wifi  platform/mobile nd/1", "api-client/1 com.douban.frodo/7.3.0(207) Android/22 product/MI 9 vendor/Xiaomi model/MI 9 brand/Android  rom/miui6  network/wifi platform/mobile nd/1"]
+        this.startHttpServer()
     }
+startHttpServer() {
+        const port = 3000; // You can change this port number if needed
+ console.debug('DoubanSpider init1')
+        const server = http.createServer((req, res) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'text/plain');
+            res.end('DoubanSpider HTTP Server is running');
+        });
+console.debug('DoubanSpider init2')
+        server.listen(port, () => {
+            this.jadeLog.info(`HTTP server running on port ${port}`, true);
+        });
 
+        server.on('error', (error) => {
+            this.jadeLog.error(`HTTP server error: ${error.message}`, true);
+        });
+    }
     getHeader() {
         return {
             "Host": "frodo.douban.com",
